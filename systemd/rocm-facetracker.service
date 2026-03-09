@@ -1,0 +1,32 @@
+[Unit]
+Description=ROCm Face Tracker for OBS
+After=graphical.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/home/YOUR_USERNAME/Projects/rocm-face-tracker
+
+# CRITICAL: Environment variables for AMD RDNA2
+Environment="HSA_OVERRIDE_GFX_VERSION=10.3.0"
+Environment="PYTORCH_ROCM_ARCH=gfx1030"
+Environment="PYTORCH_HIP_ALLOC_CONF=expandable_segments:True"
+Environment="ROCM_PATH=/opt/rocm"
+
+# Ensure v4l2loopback is loaded with Chrome-compatible settings
+ExecStartPre=/sbin/modprobe v4l2loopback devices=1 video_nr=10 card_label=FaceTrack exclusive_caps=1 max_buffers=2
+
+# Activate virtual environment and run
+ExecStart=/bin/bash -c 'source /home/YOUR_USERNAME/venvs/facetrack/bin/activate && python /home/YOUR_USERNAME/Projects/rocm-face-tracker/src/main.py --config /home/YOUR_USERNAME/Projects/rocm-face-tracker/config.yaml'
+
+# Restart on failure
+Restart=on-failure
+RestartSec=5
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rocm-facetracker
+
+[Install]
+WantedBy=graphical.target

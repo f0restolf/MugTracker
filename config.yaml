@@ -1,0 +1,58 @@
+# ROCm Face Tracker Configuration
+# Copy this to config.yaml and adjust for your setup
+
+camera:
+  # Input camera device (check with: v4l2-ctl --list-devices)
+  input_device: "/dev/video0"
+  # Cam Link 4K supports up to 4K@30 or 1080p@60
+  input_resolution: [1920, 1080]
+  fps: 30
+
+output:
+  # Virtual camera device (v4l2loopback)
+  device: "/dev/video10"
+  # Output to OBS
+  resolution: [1920, 1080]
+
+tracking:
+  # Position smoothing: 0.1 (smooth) to 0.3 (responsive)
+  smoothing: 0.15
+  
+  # Minimum movement (pixels) before tracking updates
+  deadzone: 20
+  
+  # Zoom level: 1.0 = no zoom, 2.0 = half frame, etc.
+  zoom_level: 2.0
+  
+  # Run detection every N frames (higher = less CPU/GPU, more latency)
+  detection_interval: 1
+  
+  # Frames without face before zooming out to full frame
+  no_face_timeout: 30
+  
+  # Adaptive zoom: auto-adjust zoom based on face size
+  adaptive_zoom: false
+  
+  # Velocity prediction: reduce lag during fast movement
+  velocity_prediction: false
+
+model:
+  # YOLO-Face model weights
+  # Options: models/model.pt (fast), yolov11s-face.pt (balanced), yolov11m-face.pt (accurate)
+  weights: "models/model.pt"
+  
+  # Minimum detection confidence (0.0-1.0)
+  confidence: 0.5
+
+rocm:
+  # Device for inference: "cuda" for GPU, "cpu" for CPU fallback
+  device: "cuda"
+  
+  # These should also be set as environment variables:
+  # HSA_OVERRIDE_GFX_VERSION=10.3.0
+  # PYTORCH_ROCM_ARCH=gfx1030
+  # PYTORCH_HIP_ALLOC_CONF=expandable_segments:True
+
+debug:
+  # Show FPS and stats in console
+  show_stats: true

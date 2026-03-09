@@ -1,0 +1,20 @@
+# ROCm Face Tracker Dependencies
+# Install with: pip install -r requirements.txt
+#
+# NOTE: Install PyTorch with ROCm FIRST using:
+#   pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/rocm6.2.4
+
+# Core dependencies
+opencv-python>=4.8.0
+numpy>=1.24.0
+pyyaml>=6.0
+
+# Virtual camera output (replaces abandoned pyfakewebcam)
+pyvirtualcam>=0.10.0
+
+# YOLO-Face (uses ultralytics as base)
+ultralytics>=8.0.0
+
+# Optional: for development
+# ipython
+# pytest
