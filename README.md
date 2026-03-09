@@ -179,7 +179,7 @@ mugtracker/
 
 ## License
 
-GPL-3.0 — matching the YOLO-Face model license.
+This project is licensed under the AGPL-3.0 License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
