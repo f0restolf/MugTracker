@@ -1,4 +1,4 @@
-# MugTracker 🎯
+# MugTracker 󰖠
 
 **GPU-accelerated face tracking for OBS — because your CPU has better things to do.**
 
