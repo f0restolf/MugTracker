@@ -1,0 +1,31 @@
+services:
+  mugtracker:
+    build: .
+    image: mugtracker:latest
+    container_name: mugtracker
+
+    # AMD GPU passthrough
+    devices:
+      - /dev/kfd
+      - /dev/dri
+      - /dev/video1:/dev/video1    # Cam Link 4K input (adjust if different)
+      - /dev/video10:/dev/video10  # v4l2loopback virtual camera output
+
+    # Required groups for GPU + video access
+    group_add:
+      - video
+      - render
+
+    # RDNA2 environment variables
+    environment:
+      - HSA_OVERRIDE_GFX_VERSION=10.3.0
+      - PYTORCH_ROCM_ARCH=gfx1030
+      - PYTORCH_HIP_ALLOC_CONF=expandable_segments:True
+      - ROCM_PATH=/opt/rocm
+
+    # Mount model weights from host (don't bake into image)
+    volumes:
+      - ./models:/app/models:ro
+      - ./config.yaml:/app/config.yaml:ro
+
+    restart: unless-stopped
