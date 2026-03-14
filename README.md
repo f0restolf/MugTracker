@@ -183,6 +183,12 @@ This project is licensed under the AGPL-3.0 License — see the [LICENSE](LICENS
 
 ---
 
+## Now THIS is why RAM is 1200 buckaroonies
+
+I dont know how to code much, but I needed a fix. Now if you need it, you can use it too!
+
+This can be adapted for other GPU acceleration "make the 69000 XT ROCm nice" necessities
+
 ## Acknowledgements
 
 - [akanametov/yolo-face](https://github.com/akanametov/yolo-face) — YOLO-Face model
